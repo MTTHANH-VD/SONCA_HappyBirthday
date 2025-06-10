@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday Sơn Ca!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(-45deg, #ffdde1, #ffecd2, #e0c3fc, #8ec5fc);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  position: relative;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.balloon {
+  position: absolute;
+  width: 40px;
+  height: 55px;
+  border-radius: 50% 50% 45% 45%;
+  background: radial-gradient(circle at 30% 30%, #ffffff99, var(--balloon-color));
+  box-shadow: inset -2px -4px 8px rgba(0, 0, 0, 0.2);
+  animation: floatUp 12s linear infinite;
+  opacity: 0.85;
+  z-index: 1;
+}
+
+.balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background: #555;
+  transform: translateX(-50%);
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) translateX(0) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-50vh) translateX(15px) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-120vh) translateX(-15px) scale(1);
+    opacity: 0.2;
+  }
+}
+
+
+    #gate {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    /* .door {
+      width: 120px; height: 200px;
+      background: #ffcc66;
+      border: 4px solid #cc9933;
+      border-radius: 8px;
+      box-shadow: inset 0 0 10px #cc9900, 0 4px 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      animation: pulse 2s infinite;
+    } */
+    .door {
+  width: 200px;
+  height: 300px;
+  background-image: url('images/mail.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .square-effect {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      opacity: 0;
+      transition: opacity 1s ease, transform 1.5s ease;
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .confetti-piece {
+      position: fixed;
+      width: 8px; height: 8px;
+      background-color: red;
+      opacity: 0.9;
+      border-radius: 2px;
+      pointer-events: none;
+      will-change: transform, opacity;
+      animation-timing-function: ease-out;
+    }
+    #gift-box {
+ position: fixed;
+   top: 50%; left: 50%;
+     width: 300px; height: 300px;
+  cursor: pointer;
+     align-items: center;
+      justify-content: center;
+  transform: translateX(-50%) scale(0.8);
+  opacity: 0;
+  transition: opacity 1s ease, transform 0.8s ease;
+  z-index: 10;
+ display: none;
+  background: url('images/gift.png') no-repeat center/contain; /* Bạn thay bằng ảnh hộp quà của bạn */
+   animation: shake 1.5s infinite ease-in-out;
+}
+
+#gift-box.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.05);
+}
+@keyframes shake {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  25% { transform: translate(-50%, -50%) rotate(-5deg); }
+  50% { transform: translate(-50%, -50%) rotate(5deg); }
+  75% { transform: translate(-50%, -50%) rotate(-3deg); }
+  100% { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+
+    #gift-box:hover {
+      
+      transform: translate(-50%, -50%) scale(1.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /*----------------------------*/
+
+  #message-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  padding: 40px 60px;
+  background: rgba(255, 240, 250, 0.95);
+  border: 3px solid #ff69b4;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
+  font-family: 'Fredoka', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  color: #ff4da6;
+  opacity: 0;
+  transition: opacity 1s ease, transform 0.5s ease;
+  z-index: 20;
+  pointer-events: none;
+  white-space: pre-line;
+  max-width: 90vw;
+  width: 80vw;
+  word-wrap: break-word;
+}
+
+
+
+#message-box.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+  </style>
+</head>
+<body>
+  <audio id="bg-music" autoplay loop hidden>
+  <source src="audio/hpbd_piano.mp3" type="audio/mpeg">
+  Trình duyệt của bạn không hỗ trợ âm thanh.
+</audio>
+
+  <div id="gate">
+    <div class="door" onclick="startEffect()"></div>
+  </div>
+  <div id="gift-box" onclick="openGift()"></div>
+<div id="message-box">🎉 Happy Birthday! <br> Một tuổi mới thật nhiều niềm vui và thành công nhé! Thật nhiều may mắn và bình an! 🎂</div>
+
+  <script>
+    const imageUrls = [
+      'images/img1.jpg',
+      'images/img2.jpg',
+      'images/img3.jpg',
+      'images/img4.jpg',
+      'images/img5.jpg',
+      'images/img6.jpg',
+    ];
+
+    const positions = [
+      { top: '30%', left: '40%' },
+      { top: '30%', left: '60%' },
+      { top: '45%', left: '35%' },
+      { top: '45%', left: '45%' },
+      { top: '60%', left: '55%' },
+      { top: '40%', left: '35%' },
+    ];
+
+    function startEffect() {
+    
+      const gate = document.getElementById('gate');
+      gate.innerHTML = ''; // Remove door
+      // Phát nhạc khi người dùng tương tác
+      const bgMusic = document.getElementById('bg-music');
+      if (bgMusic.paused) bgMusic.play();
+      const numSquares = imageUrls.length;
+      let completed = 0;
+
+      for(let i=0; i<numSquares; i++) {
+        setTimeout(() => {
+          const square = document.createElement('div');
+          square.classList.add('square-effect');
+          square.style.backgroundImage = `url('${imageUrls[i]}')`;
+          square.style.top = positions[i].top;
+          square.style.left = positions[i].left;
+          square.style.transform = 'scale(2)';
+          document.body.appendChild(square);
+
+          requestAnimationFrame(() => {
+            square.style.opacity = '1';
+            square.style.transform = 'scale(1)';
+          });
+
+          setTimeout(() => {
+            square.style.opacity = '0';
+            square.style.transform = 'scale(0.5)';
+            setTimeout(() => {
+              square.remove();
+              completed++;
+              if(completed === numSquares) {
+                launchConfetti();
+              }
+            }, 0);
+          }, 1500);
+        }, i * 700);
+      }
+    }
+
+    function launchConfetti() {
+  const confettiCount = 320;
+  const colors = ['#e91e63','#f48fb1','#f06292','#ce93d8','#ba68c8','#ab47bc'];
+  const confettis = [];
+
+  for (let i = 0; i < confettiCount; i++) {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti-piece');
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+    const startX = Math.random() * window.innerWidth;
+    const startY = Math.random() * -100 - 50; // Bắt đầu từ phía trên màn hình
+
+    confetti.style.left = `${startX}px`;
+    confetti.style.top = `${startY}px`;
+
+    document.body.appendChild(confetti);
+    confettis.push(confetti);
+
+    const fallY = window.innerHeight + 100;
+    const fallX = startX + (Math.random() - 0.5) * 200;
+    const rotateDeg = (Math.random() - 0.5) * 720;
+
+    const duration = 3000 + Math.random() * 2000;
+
+    confetti.animate([
+      { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
+      { transform: `translate(${fallX - startX}px, ${fallY}px) rotate(${rotateDeg}deg)`, opacity: 0.7 }
+    ], {
+      duration: duration,
+      iterations: 1,
+      easing: 'ease-in-out',
+      fill: 'forwards'
+    });
+  }
+
+  setTimeout(() => {
+    confettis.forEach(c => c.remove());
+    showGiftBox(); // Gọi hàm hiển thị hộp quà sau hiệu ứng
+  }, 5000);
+}
+
+    function showGiftBox() {
+  const gift = document.getElementById('gift-box');
+  gift.classList.add('show'); // Kích hoạt hiệu ứng xuất hiện
+  gift.style.display = 'flex';
+}
+
+function openGift() {
+  alert("Mở quà nhé 🎁"); // Tùy bạn xử lý tiếp
+}
+
+ 
+function spawnBalloons() {
+  const colors = ['#ff4d4d', '#4da6ff', '#ffd11a', '#ff66cc', '#66ff99', '#9966ff'];
+  for (let i = 0; i < 20; i++) {
+    const balloon = document.createElement('div');
+    balloon.className = 'balloon';
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    balloon.style.setProperty('--balloon-color', color);
+    balloon.style.left = `${Math.random() * window.innerWidth}px`;
+    balloon.style.animationDelay = `${Math.random() * 10}s`;
+    document.body.appendChild(balloon);
+  }
+}
+spawnBalloons();
+
+function openGift() {
+  const gift = document.getElementById('gift-box');
+  const messageBox = document.getElementById('message-box');
+
+  // Ẩn hộp quà
+  gift.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+  gift.style.opacity = '0';
+  gift.style.transform = 'translateX(-50%) scale(0.6)';
+
+  // Sau khi hộp quà biến mất, hiện lời chúc
+  setTimeout(() => {
+    gift.style.display = 'none';
+    typeMessage();
+  }, 800);
+}
+
+function typeMessage() {
+  const messageBox = document.getElementById('message-box');
+  const fullText = `🎉 Happy Birthday! \nMột tuổi mới thật nhiều niềm vui và thành công nhé! Thật nhiều may mắn và bình an! 🎂`;
+  
+  messageBox.textContent = '';
+  messageBox.classList.add('show');
+
+  let index = 0;
+
+  function type() {
+    if (index < fullText.length) {
+      messageBox.textContent += fullText.charAt(index);
+      index++;
+      setTimeout(type, 40); // tốc độ viết, giảm số để viết nhanh hơn
+    }
+  }
+
+  type();
+}
+
+
+
+
+  </script>
+</body>
+</html>
